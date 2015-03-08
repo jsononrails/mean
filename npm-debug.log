@@ -1,0 +1,120 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 warn package.json MEAN@0.0.3 No description
+5 warn package.json MEAN@0.0.3 No repository field.
+6 warn package.json MEAN@0.0.3 No README data
+7 verbose readDependencies using package.json deps
+8 verbose install where, deps [ '/Users/jason/nodework/mean',
+8 verbose install   [ 'express',
+8 verbose install     'morgan',
+8 verbose install     'compression',
+8 verbose install     'body-parser',
+8 verbose install     'method-override',
+8 verbose install     'express-session',
+8 verbose install     'ejs',
+8 verbose install     'connect-flash',
+8 verbose install     'mongoose',
+8 verbose install     'passport',
+8 verbose install     'passport-local',
+8 verbose install     'passport-facebook',
+8 verbose install     'passport-twitter',
+8 verbose install     'passport-google-oauth' ] ]
+9 info preinstall MEAN@0.0.3
+10 verbose readDependencies using package.json deps
+11 verbose already installed skipping express@~4.8.8 /Users/jason/nodework/mean
+12 verbose already installed skipping morgan@~1.3.0 /Users/jason/nodework/mean
+13 verbose already installed skipping compression@~1.0.11 /Users/jason/nodework/mean
+14 verbose already installed skipping body-parser@~1.8.0 /Users/jason/nodework/mean
+15 verbose already installed skipping method-override@~2.2.0 /Users/jason/nodework/mean
+16 verbose already installed skipping express-session@~1.7.6 /Users/jason/nodework/mean
+17 verbose already installed skipping ejs@~1.0.0 /Users/jason/nodework/mean
+18 verbose already installed skipping connect-flash@~0.1.1 /Users/jason/nodework/mean
+19 verbose already installed skipping mongoose@~3.8.15 /Users/jason/nodework/mean
+20 verbose already installed skipping passport@~0.2.1 /Users/jason/nodework/mean
+21 verbose already installed skipping passport-local@~1.0.0 /Users/jason/nodework/mean
+22 verbose already installed skipping passport-facebook@~1.0.3 /Users/jason/nodework/mean
+23 verbose already installed skipping passport-twitter@~1.0.2 /Users/jason/nodework/mean
+24 verbose cache add [ 'passport-google-oauth@~1.0.2', null ]
+25 verbose cache add name=undefined spec="passport-google-oauth@~1.0.2" args=["passport-google-oauth@~1.0.2",null]
+26 verbose parsed url { protocol: null,
+26 verbose parsed url   slashes: null,
+26 verbose parsed url   auth: null,
+26 verbose parsed url   host: null,
+26 verbose parsed url   port: null,
+26 verbose parsed url   hostname: null,
+26 verbose parsed url   hash: null,
+26 verbose parsed url   search: null,
+26 verbose parsed url   query: null,
+26 verbose parsed url   pathname: 'passport-google-oauth@~1.0.2',
+26 verbose parsed url   path: 'passport-google-oauth@~1.0.2',
+26 verbose parsed url   href: 'passport-google-oauth@~1.0.2' }
+27 verbose cache add name="passport-google-oauth" spec="~1.0.2" args=["passport-google-oauth","~1.0.2"]
+28 verbose parsed url { protocol: null,
+28 verbose parsed url   slashes: null,
+28 verbose parsed url   auth: null,
+28 verbose parsed url   host: null,
+28 verbose parsed url   port: null,
+28 verbose parsed url   hostname: null,
+28 verbose parsed url   hash: null,
+28 verbose parsed url   search: null,
+28 verbose parsed url   query: null,
+28 verbose parsed url   pathname: '~1.0.2',
+28 verbose parsed url   path: '~1.0.2',
+28 verbose parsed url   href: '~1.0.2' }
+29 verbose addNamed [ 'passport-google-oauth', '~1.0.2' ]
+30 verbose addNamed [ null, '>=1.0.2-0 <1.1.0-0' ]
+31 silly lockFile a5281441-passport-google-oauth-1-0-2 passport-google-oauth@~1.0.2
+32 verbose lock passport-google-oauth@~1.0.2 /Users/jason/.npm/a5281441-passport-google-oauth-1-0-2.lock
+33 silly addNameRange { name: 'passport-google-oauth',
+33 silly addNameRange   range: '>=1.0.2-0 <1.1.0-0',
+33 silly addNameRange   hasData: false }
+34 verbose request where is /passport-google-oauth
+35 verbose request registry https://registry.npmjs.org/
+36 verbose request id 62a17a086c31f09d
+37 verbose url raw /passport-google-oauth
+38 verbose url resolving [ 'https://registry.npmjs.org/', './passport-google-oauth' ]
+39 verbose url resolved https://registry.npmjs.org/passport-google-oauth
+40 verbose request where is https://registry.npmjs.org/passport-google-oauth
+41 info trying registry request attempt 1 at 16:26:12
+42 http GET https://registry.npmjs.org/passport-google-oauth
+43 http 200 https://registry.npmjs.org/passport-google-oauth
+44 silly registry.get cb [ 200,
+44 silly registry.get   { date: 'Sun, 28 Dec 2014 21:26:13 GMT',
+44 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+44 silly registry.get     etag: '"CNH1HR2EP7JOPTNOKQR95WBCR"',
+44 silly registry.get     'content-type': 'application/json',
+44 silly registry.get     'cache-control': 'max-age=60',
+44 silly registry.get     'content-length': '12491',
+44 silly registry.get     'accept-ranges': 'bytes',
+44 silly registry.get     via: '1.1 varnish',
+44 silly registry.get     age: '0',
+44 silly registry.get     'x-served-by': 'cache-dfw1821-DFW',
+44 silly registry.get     'x-cache': 'HIT',
+44 silly registry.get     'x-cache-hits': '1',
+44 silly registry.get     'x-timer': 'S1419801973.506133,VS0,VE178',
+44 silly registry.get     vary: 'Accept',
+44 silly registry.get     'keep-alive': 'timeout=10, max=50',
+44 silly registry.get     connection: 'Keep-Alive' } ]
+45 silly addNameRange number 2 { name: 'passport-google-oauth',
+45 silly addNameRange   range: '>=1.0.2-0 <1.1.0-0',
+45 silly addNameRange   hasData: true }
+46 silly addNameRange versions [ 'passport-google-oauth',
+46 silly addNameRange   [ '0.1.0', '0.1.1', '0.1.2', '0.1.3', '0.1.4', '0.1.5' ] ]
+47 silly lockFile a5281441-passport-google-oauth-1-0-2 passport-google-oauth@~1.0.2
+48 silly lockFile a5281441-passport-google-oauth-1-0-2 passport-google-oauth@~1.0.2
+49 error notarget No compatible version found: passport-google-oauth@'>=1.0.2-0 <1.1.0-0'
+49 error notarget Valid install targets:
+49 error notarget ["0.1.0","0.1.1","0.1.2","0.1.3","0.1.4","0.1.5"]
+49 error notarget
+49 error notarget This is most likely not a problem with npm itself.
+49 error notarget In most cases you or one of your dependencies are requesting
+49 error notarget a package version that doesn't exist.
+50 error System Darwin 14.0.0
+51 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+52 error cwd /Users/jason/nodework/mean
+53 error node -v v0.10.33
+54 error npm -v 1.4.28
+55 error code ETARGET
+56 verbose exit [ 1, true ]
