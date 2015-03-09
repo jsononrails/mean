@@ -1,7 +1,7 @@
 angular.module('articles').config(['$routeProvider',
 	function($routeProvider) {
 		
-	/*	$routeProvider.
+	$routeProvider.
 		when('/articles', {
 			
 			templateUrl: 'articles/views/list-articles.client.view.html'
@@ -22,6 +22,6 @@ angular.module('articles').config(['$routeProvider',
 			templateUrl: 'articles/views/edit-article.client.views.html'
 			
 		});
-		*/
+		
 	}
 ]);
