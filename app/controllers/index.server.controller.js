@@ -1,9 +1,8 @@
 exports.render = function(req, res) {
 	
 	req.session.lastVisit = new Date();
-	
 	res.render('index', {
 		title: 'Hello World',
-		user: JSON.stringify(req.user)
+		user:  JSON.stringify(req.user)
 	});
 };
