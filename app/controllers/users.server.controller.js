@@ -140,8 +140,6 @@ exports.read = function(req, res) {
 };
 
 exports.userByID = function(req, res, next, id) {
-	
-	console.log('this is the user id: ' + id);
 	 
 	User.findOne({
 		_id: id
@@ -149,7 +147,7 @@ exports.userByID = function(req, res, next, id) {
 		
 		if(err)
 			return next(err);
-			
+
 		req.user = user;
 		next();	
 	});

@@ -14,12 +14,12 @@ angular.module('articles').config(['$routeProvider',
 		}).
 		when('/articles/:articleId', {
 			
-			templateUrl: 'articles/view/view-article.client.view.html'
+			templateUrl: 'articles/views/view-article.client.view.html'
 			
 		}).
 		when('/articles/:articleId/edit', {
 		
-			templateUrl: 'articles/views/edit-article.client.views.html'
+			templateUrl: 'articles/views/edit-article.client.view.html'
 			
 		});
 		

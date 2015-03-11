@@ -30,7 +30,7 @@ function($scope, $routeParams, $location, Authentication, Articles) {
 		article.$save(function(response) {
 
 			$location.path('article/' + response._id);
-
+			console.log('redirect from create');
 		}, function(errorResponse) {
 
 			$scope.error = errorResponse.data.message;
