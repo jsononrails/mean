@@ -62,7 +62,7 @@ function($scope, $routeParams, $location, Authentication, Articles) {
 
 		$scope.article.$update(function() {
 
-			$location.path('articleId/' + $scope.articleId._id);
+			$location.path('articleId/' + $scope.article._id);
 
 		}, function(errorResponse) {
 
