@@ -74,9 +74,9 @@ function($scope, $routeParams, $location, Authentication, Articles) {
 
 	// delete action
 	$scope.delete = function(article) {
-
+	
 		if(article) {
-
+			
 			article.$remove(function() {
 
 				for(var i in $scope.articles) {

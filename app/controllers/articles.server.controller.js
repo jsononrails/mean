@@ -58,7 +58,7 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 	
 	var article = req.article;
-	
+	console.log('this is article: ' + article);
 	article.remove(function(err) {
 	
 		if(err) {
@@ -134,6 +134,7 @@ exports.hasAuthorization = function(req, res, next) {
 		
 	}
 	
+	next();
 };
 	
 var getErrorMessage = function(err) {
