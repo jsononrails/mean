@@ -1,5 +1,7 @@
 var
 	config 			= require('./config'),
+	http			= require('http'),
+	socketio		= require('socket.io'),
 	express 		= require('express'),
 	morgan 			= require('morgan'),
 	compress 		= require('compression'),
@@ -11,7 +13,9 @@ var
 
 module.exports = function() {
 	var
-		app = express();
+		app = express(),
+		server = http.createServer(app),
+		io = socketio.listen(server);
 	
 	// load environment from system variable
 	if (process.env.NODE_ENV === 'development') {
@@ -54,5 +58,5 @@ module.exports = function() {
 	// register static files
 	app.use(express.static('./public'));
 	
-	return app;
+	return server;
 };
