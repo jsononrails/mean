@@ -6,7 +6,7 @@ module.exports = function(server, io, mongoStore) {
 	
 	io.use(function(socket, next) {
 		
-		cookieParser(config.sessionSecret) (socket.request, {} function(err) {
+		cookieParser(config.sessionSecret) (socket.request, {}, function(err) {
 			
 			var sessionId = socket.request.signedCookies['connect.sid'];
 			

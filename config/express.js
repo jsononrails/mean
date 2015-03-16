@@ -12,7 +12,7 @@ var
 	flash			= require('connect-flash'),
 	passport		= require('passport');
 
-module.exports = function() {
+module.exports = function(db) {
 	var
 		app = express(),
 		server = http.createServer(app),
