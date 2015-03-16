@@ -8,6 +8,7 @@ var
 	bodyParser 		= require('body-parser'),
 	methodOverride 	= require('method-override'),
 	session			= require('express-session'),
+	MongoStore		= require('connect-mongo')(session),
 	flash			= require('connect-flash'),
 	passport		= require('passport');
 
@@ -32,11 +33,20 @@ module.exports = function() {
 	app.use(bodyParser.json());
 	app.use(methodOverride());
 	
+	
+	
 	// config sessions
+	var mongoStore = new MongoStore({
+	
+		db: db.connection.db
+		
+	});
+	
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,
-		secret: config.sessionSecret
+		secret: config.sessionSecret,
+		store: mongoStore
 	}));
 	
 	// register views
@@ -57,6 +67,9 @@ module.exports = function() {
 	
 	// register static files
 	app.use(express.static('./public'));
+	
+	// register socketio
+	require('./socketio')(server, io, mongoStore);
 	
 	return server;
 };
