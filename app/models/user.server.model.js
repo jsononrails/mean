@@ -1,98 +1,57 @@
-var
-	mongoose = require('mongoose'),
+// Invoke 'strict' JavaScript mode
+'use strict';
+
+// Load the module dependencies
+var mongoose = require('mongoose'),
 	crypto = require('crypto'),
-	Schema	 = mongoose.Schema,
-	
-	UserSchema = new Schema({
-		firstName: 	{
-			type: String,
-			trim: true
-		},
+	Schema = mongoose.Schema;
 
-		lastName: 	{
-			type: String,
-			trim: true
-		},
-		
-		email: 		{
-			type: String,
-			trim: true,
-			unique: true,
-			match: /.+\@.+\..+/,
-			required: true
-		},
-		
-		username: 	{
-			type: String,
-			trim: true,
-			unique: true,
-			required: true
-		},
-		
-		password: 	{
-			type: String,
-			trim: true,
-			required: true,
-			validate: [
+// Define a new 'UserSchema'
+var UserSchema = new Schema({
+	firstName: String,
+	lastName: String,
+	email: {
+		type: String,
+		// Validate the email format
+		match: [/.+\@.+\..+/, "Please fill a valid email address"]
+	},
+	username: {
+		type: String,
+		// Set a unique 'username' index
+		unique: true,
+		// Validate 'username' value existance
+		required: 'Username is required',
+		// Trim the 'username' field
+		trim: true
+	},
+	password: {
+		type: String,
+		// Validate the 'password' value length
+		validate: [
+
 			function(password) {
-				return password.length >= 6;
-			},
-			'Password should be at least 6 characters in length.'
-			]
-		},
-		
-		salt: {
-			type: String
-		},
-		
-		provider: {
-			type: String,
-			required: 'Provider is required'
-		},
-		
-		providerId: String,
-		providerData: {},
-		
-		website: {
-			type: String,
-			
-			get: function(url) {
-				if(!url) {
-					return url;
-				} else {
-					if(url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) {
-						url = 'http://' + url;
-					}
-					
-					return url;
-				}
-			},
-			
-			set: function(url) {
-				if(!url) {
-					return url;
-				} else {
-					if(url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) {
-						url = 'http://' + url;
-					}
-					
-					return url;
-				}
-			}
-		},
-		
-		role: {
-			type: String,
-			enum: ['Admin', 'Owner', 'User']
-		},
-		
-		created: 	{
-			type: Date,
-			default: Date.now
-		}
-	});
+				return password && password.length > 6;
+			}, 'Password should be longer'
+		]
+	},
+	salt: {
+		type: String
+	},
+	provider: {
+		type: String,
+		// Validate 'provider' value existance
+		required: 'Provider is required'
+	},
+	providerId: String,
+	providerData: {},
+	created: {
+		type: Date,
+		// Create a default 'created' value
+		default: Date.now
+	}
+});
 
-// virtual attributes
+// Set the 'fullname' virtual property
 UserSchema.virtual('fullName').get(function() {
 	return this.firstName + ' ' + this.lastName;
 }).set(function(fullName) {
@@ -101,21 +60,41 @@ UserSchema.virtual('fullName').get(function() {
 	this.lastName = splitName[1] || '';
 });
 
-// custom static methods
-UserSchema.statics.findOneByUsername = function(username, callback) {
-	this.findOne({ username: new RegExp(username, 'i')}, callback);
+// Use a pre-save middleware to hash the password
+UserSchema.pre('save', function(next) {
+	if (this.password) {
+		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+		this.password = this.hashPassword(this.password);
+	}
+
+	next();
+});
+
+// Create an instance method for hashing a password
+UserSchema.methods.hashPassword = function(password) {
+	return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
 };
 
-UserSchema.statics.findUniqueUsername = function(username, sufix, callback) {
+// Create an instance method for authenticating user
+UserSchema.methods.authenticate = function(password) {
+	return this.password === this.hashPassword(password);
+};
+
+// Find possible not used username
+UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	var _this = this;
-	
+
+	// Add a 'username' suffix
 	var possibleUsername = username + (suffix || '');
-	
+
+	// Use the 'User' model 'findOne' method to find an available unique username
 	_this.findOne({
 		username: possibleUsername
 	}, function(err, user) {
-		if(!err) {
-			if(!user) {
+		// If an error occurs call the callback with a null value, otherwise find find an available unique username
+		if (!err) {
+			// If an available unique username was found call the callback method, otherwise call the 'findUniqueUsername' method again with a new suffix
+			if (!user) {
 				callback(possibleUsername);
 			} else {
 				return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
@@ -126,32 +105,11 @@ UserSchema.statics.findUniqueUsername = function(username, sufix, callback) {
 	});
 };
 
-// custom instance methods
-UserSchema.methods.authenticate = function(password) {
-	return this.password === this.hashPassword(password);
-};
-
-UserSchema.methods.hashPassword = function(password) {
-	return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
-};
-
-// pre middleware
-UserSchema.pre('save', function(next) {
-	if(this.password) {
-		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-		this.password = this.hashPassword(this.password);
-	}
-	next();
+// Configure the 'UserSchema' to use getters and virtuals when transforming to JSON
+UserSchema.set('toJSON', {
+	getters: true,
+	virtuals: true
 });
 
-// post middleware
-UserSchema.post('save', function(next) {
-	if(this.isNew) {
-		console.log('A new user was created.');
-	} else {
-		console.log('A user updated their details');
-	}
-});
-
-UserSchema.set('toJSON', { getters: true, virtuals: true })	;
+// Create the 'User' model out of the 'UserSchema'
 mongoose.model('User', UserSchema);

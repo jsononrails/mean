@@ -1,23 +1,23 @@
+// Invoke 'strict' JavaScript mode
+'use strict';
+
+// Set the 'development' environment configuration object
 module.exports = {
-	db: 'mongodb://localhost/mean-book',
-	
-	sessionSecret: '7794ebe2dcac4d20a4704d7a2ab2dc133ed0fcd0796740b7b5f8183b639cfb5a',
-	
+	db: 'mongodb://localhost/mean-development',
+	sessionSecret: 'developmentSessionSecret',
 	facebook: {
-		clientID: '495018637308024',
-		clientSecret: '8827dd1a3b81e8f8305c7dfa294b5a3e',
+		clientID: 'Facebook Application ID',
+		clientSecret: 'Facebook Application Secret',
 		callbackURL: 'http://localhost:3000/oauth/facebook/callback'
 	},
-	
 	twitter: {
-		clientID: 'Application Id',
-		clientSecret: 'Application Secret',
+		clientID: 'Twitter Application ID',
+		clientSecret: 'Twitter Application Secret',
 		callbackURL: 'http://localhost:3000/oauth/twitter/callback'
 	},
-	
 	google: {
-		clientID: 'Application Id',
-		clientSecret: 'Application Secret',
-		callback: 'http://localhost:3000/oauth/google/callback'
+		clientID: 'Google Application ID',
+		clientSecret: 'Google Application Secret',
+		callbackURL: 'http://localhost:3000/oauth/google/callback'
 	}
 };

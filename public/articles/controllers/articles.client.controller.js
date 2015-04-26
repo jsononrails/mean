@@ -1,105 +1,75 @@
-/*
-	Filename: Articles Controller
-	Created by: Jason McBride jsononrails@gmail.com
-	Date: 2015-04-07
-	
-	Purpose:
-		Provides client side CRUD access to API endpoints
+// Invoke 'strict' JavaScript mode
+'use strict';
 
-*/
+// Create the 'articles' controller
+angular.module('articles').controller('ArticlesController', ['$scope', '$routeParams', '$location', 'Authentication', 'Articles',
+    function($scope, $routeParams, $location, Authentication, Articles) {
+    	// Expose the Authentication service
+        $scope.authentication = Authentication;
 
-// controller constructor
-// setup dependency injection for controller
-angular.module('articles').controller('ArticlesController',
-['$scope', '$routeParams', '$location', 'Authentication', 'Articles',
-function($scope, $routeParams, $location, Authentication, Articles) {
+        // Create a new controller method for creating new articles
+        $scope.create = function() {
+        	// Use the form fields to create a new article $resource object
+            var article = new Articles({
+                title: this.title,
+                content: this.content
+            });
 
-	$scope.authentication = Authentication;
-	
-	
-	// create action
-	$scope.create = function() {
+            // Use the article '$save' method to send an appropriate POST request
+            article.$save(function(response) {
+            	// If an article was created successfully, redirect the user to the article's page 
+                $location.path('articles/' + response._id);
+            }, function(errorResponse) {
+            	// Otherwise, present the user with the error message
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
-		var article = new Articles({
+        // Create a new controller method for retrieving a list of articles
+        $scope.find = function() {
+        	// Use the article 'query' method to send an appropriate GET request
+            $scope.articles = Articles.query();
+        };
 
-			title: this.title,
-			content: this.content
+        // Create a new controller method for retrieving a single article
+        $scope.findOne = function() {
+        	// Use the article 'get' method to send an appropriate GET request
+            $scope.article = Articles.get({
+                articleId: $routeParams.articleId
+            });
+        };
 
-		});
+        // Create a new controller method for updating a single article
+        $scope.update = function() {
+        	// Use the article '$update' method to send an appropriate PUT request
+            $scope.article.$update(function() {
+            	// If an article was updated successfully, redirect the user to the article's page 
+                $location.path('articles/' + $scope.article._id);
+            }, function(errorResponse) {
+            	// Otherwise, present the user with the error message
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
-		article.$save(function(response) {
-
-			$location.path('article/' + response._id);
-			console.log('redirect from create');
-		}, function(errorResponse) {
-
-			$scope.error = errorResponse.data.message;
-
-		});
-
-	};
-
-	// list action
-	$scope.find = function() {
-
-		$scope.articles = Articles.query();
-
-	};
-
-	// load  article action
-	$scope.findOne = function() {
-
-		$scope.article = Articles.get({
-
-			articleId: $routeParams.articleId
-
-		});
-
-	}
-
-	// update action
-	$scope.update = function() {
-
-		$scope.article.$update(function() {
-
-			$location.path('articleId/' + $scope.article._id);
-
-		}, function(errorResponse) {
-
-			$scope.error = errorResponse.data.message;
-
-		});
-
-	};
-
-	// delete action
-	$scope.delete = function(article) {
-	
-		if(article) {
-			
-			article.$remove(function() {
-
-				for(var i in $scope.articles) {
-
-					if($scope.articles[i] === article) {
-
-						$scope.articles.splice(i, 1);
-
-					}
-
-				}
-
-			});
-
-		} else {
-
-			$scope.article.$remove(function() {
-
-				$location.path('articles');
-
-			});
-
-		}
-
-	};
-}]);
+        // Create a new controller method for deleting a single article
+        $scope.delete = function(article) {
+        	// If an article was sent to the method, delete it
+            if (article) {
+            	// Use the article '$remove' method to delete the article
+                article.$remove(function() {
+                	// Remove the article from the articles list
+                    for (var i in $scope.articles) {
+                        if ($scope.articles[i] === article) {
+                            $scope.articles.splice(i, 1);
+                        }
+                    }
+                });
+            } else {
+            	// Otherwise, use the article '$remove' method to delete the article
+                $scope.article.$remove(function() {
+                    $location.path('articles');
+                });
+            }
+        };
+    }
+]);

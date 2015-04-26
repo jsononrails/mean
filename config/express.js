@@ -1,75 +1,80 @@
-var
-	config 			= require('./config'),
-	http			= require('http'),
-	socketio		= require('socket.io'),
-	express 		= require('express'),
-	morgan 			= require('morgan'),
-	compress 		= require('compression'),
-	bodyParser 		= require('body-parser'),
-	methodOverride 	= require('method-override'),
-	session			= require('express-session'),
-	MongoStore		= require('connect-mongo')(session),
-	flash			= require('connect-flash'),
-	passport		= require('passport');
+// Invoke 'strict' JavaScript mode
+'use strict';
 
+// Load the module dependencies
+var config = require('./config'),
+	http = require('http'),
+	socketio = require('socket.io'),
+	express = require('express'),
+	morgan = require('morgan'),
+	compress = require('compression'),
+	bodyParser = require('body-parser'),
+	methodOverride = require('method-override'),
+	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session),
+	flash = require('connect-flash'),
+	passport = require('passport');
+
+// Define the Express configuration method
 module.exports = function(db) {
-	var
-		app = express(),
-		server = http.createServer(app),
-		io = socketio.listen(server);
+	// Create a new Express application instance
+	var app = express();
 	
-	// load environment from system variable
+	// Create a new HTTP server
+    var server = http.createServer(app);
+
+    // Create a new Socket.io server
+    var io = socketio.listen(server);
+
+	// Use the 'NDOE_ENV' variable to activate the 'morgan' logger or 'compress' middleware
 	if (process.env.NODE_ENV === 'development') {
 		app.use(morgan('dev'));
 	} else if (process.env.NODE_ENV === 'production') {
 		app.use(compress());
 	}
-	
+
+	// Use the 'body-parser' and 'method-override' middleware functions
 	app.use(bodyParser.urlencoded({
 		extended: true
 	}));
-	
-	// config body parser
 	app.use(bodyParser.json());
 	app.use(methodOverride());
-	
-	
-	
-	// config sessions
+
+	// Configure the MongoDB session storage
 	var mongoStore = new MongoStore({
-	
-		db: db.connection.db
-		
-	});
-	
+        db: db.connection.db
+    });
+
+	// Configure the 'session' middleware
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,
 		secret: config.sessionSecret,
 		store: mongoStore
 	}));
-	
-	// register views
+
+	// Set the application view engine and 'views' folder
 	app.set('views', './app/views');
 	app.set('view engine', 'ejs');
-	
-	// config flash messaging
+
+	// Configure the flash messages middleware
 	app.use(flash());
-	
-	// config passport
+
+	// Configure the Passport middleware
 	app.use(passport.initialize());
 	app.use(passport.session());
-	
-	// import routes
+
+	// Load the routing files
 	require('../app/routes/index.server.routes.js')(app);
 	require('../app/routes/users.server.routes.js')(app);
 	require('../app/routes/articles.server.routes.js')(app);
-	
-	// register static files
+
+	// Configure static file serving
 	app.use(express.static('./public'));
-	
-	// register socketio
+
+	// Load the Socket.io configuration
 	require('./socketio')(server, io, mongoStore);
 	
+	// Return the Server instance
 	return server;
 };
