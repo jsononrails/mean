@@ -1,64 +1,21 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node',
-1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'install',
-1 verbose cli   '-g',
-1 verbose cli   'karma-cli' ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
-4 verbose cache add [ 'karma-cli', null ]
-5 verbose cache add name=undefined spec="karma-cli" args=["karma-cli",null]
-6 verbose parsed url { protocol: null,
-6 verbose parsed url   slashes: null,
-6 verbose parsed url   auth: null,
-6 verbose parsed url   host: null,
-6 verbose parsed url   port: null,
-6 verbose parsed url   hostname: null,
-6 verbose parsed url   hash: null,
-6 verbose parsed url   search: null,
-6 verbose parsed url   query: null,
-6 verbose parsed url   pathname: 'karma-cli',
-6 verbose parsed url   path: 'karma-cli',
-6 verbose parsed url   href: 'karma-cli' }
-7 silly lockFile aa100f68-karma-cli karma-cli
-8 verbose lock karma-cli /Users/jason/.npm/aa100f68-karma-cli.lock
-9 silly lockFile aa100f68-karma-cli karma-cli
-10 silly lockFile aa100f68-karma-cli karma-cli
-11 verbose addNamed [ 'karma-cli', '' ]
-12 verbose addNamed [ null, '*' ]
-13 silly lockFile 8f6f2c72-karma-cli karma-cli@
-14 verbose lock karma-cli@ /Users/jason/.npm/8f6f2c72-karma-cli.lock
-15 silly addNameRange { name: 'karma-cli', range: '*', hasData: false }
-16 verbose request where is /karma-cli
-17 verbose request registry https://registry.npmjs.org/
-18 verbose request id 8ae4582d13bd8048
-19 verbose url raw /karma-cli
-20 verbose url resolving [ 'https://registry.npmjs.org/', './karma-cli' ]
-21 verbose url resolved https://registry.npmjs.org/karma-cli
-22 verbose request where is https://registry.npmjs.org/karma-cli
-23 info trying registry request attempt 1 at 18:55:45
-24 http GET https://registry.npmjs.org/karma-cli
-25 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
-26 info trying registry request attempt 2 at 18:55:55
-27 http GET https://registry.npmjs.org/karma-cli
-28 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
-29 info trying registry request attempt 3 at 18:56:55
-30 http GET https://registry.npmjs.org/karma-cli
-31 silly lockFile 8f6f2c72-karma-cli karma-cli@
-32 silly lockFile 8f6f2c72-karma-cli karma-cli@
-33 error network getaddrinfo ENOTFOUND
-33 error network This is most likely not a problem with npm itself
-33 error network and is related to network connectivity.
-33 error network In most cases you are behind a proxy or have bad network settings.
-33 error network
-33 error network If you are behind a proxy, please make sure that the
-33 error network 'proxy' config is set properly.  See: 'npm help config'
-34 error System Darwin 14.1.0
-35 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "karma-cli"
-36 error cwd /Users/jason/nodework/mean
-37 error node -v v0.10.33
-38 error npm -v 1.4.28
-39 error syscall getaddrinfo
-40 error code ENOTFOUND
-41 error errno ENOTFOUND
-42 verbose exit [ 1, true ]
+4 error install Couldn't read dependencies
+5 error Failed to parse json
+5 error Unexpected string
+6 error File: /Users/jason/nodework/mean/package.json
+7 error Failed to parse package.json data.
+7 error package.json must be actual JSON, not just JavaScript.
+7 error
+7 error This is not a bug in npm.
+7 error Tell the package author to fix their package.json file. JSON.parse
+8 error System Darwin 14.1.0
+9 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+10 error cwd /Users/jason/nodework/mean
+11 error node -v v0.10.33
+12 error npm -v 1.4.28
+13 error file /Users/jason/nodework/mean/package.json
+14 error code EJSONPARSE
+15 verbose exit [ 1, true ]
